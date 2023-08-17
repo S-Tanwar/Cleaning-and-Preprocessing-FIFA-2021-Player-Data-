@@ -1,0 +1,156 @@
+import pandas as pd
+
+# Load the raw FIFA 2021 player data
+df = pd.read_csv('data/fifa21_raw_data.csv', low_memory=False)
+
+# Display basic information about the dataset
+print(df.info())
+
+# Check for columns with missing values
+any_null_columns = df.isnull().any()
+print(any_null_columns)
+
+# Fill missing values in the 'Hits' column with 0
+df['Hits'] = df['Hits'].fillna(0)
+
+# Drop unnecessary columns
+columns_to_drop = ['photoUrl', 'playerUrl']
+df.drop(columns_to_drop, axis=1, inplace=True)
+
+# Rename columns for clarity
+df.rename(columns={'↓OVA': 'OVA'}, inplace=True)
+
+# Remove newline characters from the 'Club' column
+df['Club'] = df['Club'].str.replace('\n\n\n\n', '')
+
+# Convert 'Height' values to centimeters
+def change_height(x):
+    """
+    Convert height values to centimeters.
+    - Extracts height in feet and inches or meters and performs conversion.
+    - Returns the height in centimeters.
+    """
+    if x[-1] == '"':
+        x = x.replace("\"", "")
+        inch = int(x[2:]) * 2.54
+        foot = int(x[0]) * 30.48
+        return round(foot + inch)
+    elif x[-1] == "m":
+        return int(x[:-2])
+
+df['Height'] = df['Height'].apply(change_height)
+
+# Convert 'Weight' values to kilograms
+def weight_kg(x):
+    """
+    Convert weight values to kilograms.
+    - Extracts weight in pounds and performs conversion.
+    - Returns the weight in kilograms.
+    """
+    if 'lbs' in x:
+        x = x.replace('lbs', '')
+        x = float(x) * 0.45359237
+        x = int(x)
+        return x
+    else:
+        return int(x[:-2])
+
+df['Weight'] = df['Weight'].apply(weight_kg)
+
+# Convert 'Value' values to euros
+def value(x):
+    """
+    Convert value column to euros.
+    - Extracts value in thousands or millions and performs conversion.
+    - Returns the value in euros.
+    """
+    if 'M' in x:
+        x = x.replace('M', '')
+        x = float(x[1:]) * 1000000
+        return round(x)
+    elif "K" in x:
+        x = x.replace('K', '')
+        x = float(x[1:]) * 1000
+        return round(x)
+    else:
+        return int(x[1:])
+
+df['Value'] = df['Value'].apply(value)
+
+# Convert 'Wage' values to euros
+def wage(x):
+    """
+    Convert wage column to euros.
+    - Extracts wage in thousands and performs conversion.
+    - Returns the wage in euros.
+    """
+    if 'K' in x:
+        x = x.replace('K', '')
+        x = int(x[1:]) * 1000
+        return round(x)
+    else:
+        return int(x[1:])
+
+df['Wage'] = df['Wage'].apply(wage)
+
+# Convert 'Release Clause' values to euros
+def release(x):
+    """
+    Convert release clause column to euros.
+    - Extracts clause in thousands or millions and performs conversion.
+    - Returns the clause in euros.
+    """
+    if 'M' in x:
+        x = x.replace('M', '')
+        x = float(x[1:]) * 1000000
+        return round(x)
+    elif "K" in x:
+        x = x.replace('K', '')
+        x = float(x[1:]) * 1000
+        return round(x)
+    else:
+        return
+
+df['Release Clause'] = df['Release Clause'].apply(release)
+
+# Clean 'W/F' column by removing special characters and converting to int
+df['W/F'] = df['W/F'].str.replace('★', '')
+df['W/F'] = df['W/F'].astype(int)
+
+# Clean 'SM' column by removing special characters and converting to int
+df['SM'] = df['SM'].str.replace('★', '')
+df['SM'] = df['SM'].astype(int)
+
+# Clean 'A/W' column
+df["A/W"].unique() 
+
+# Clean 'D/W' column
+df["D/W"].unique()
+
+# Clean 'IR' column by removing special characters and converting to int
+df['IR'] = df['IR'].str.replace('★', '')
+df['IR'] = df['IR'].astype(int)
+
+# Clean 'Hits' column by converting 'K' values to integers
+def hitchange(h):
+    """
+    Convert hits column to integers.
+    - Extracts hits in thousands and performs conversion.
+    - Returns the hits as integers.
+    """
+    if "K" in h:
+        h = h.replace('K', "")
+        h = float(h) * 1000
+        return round(h)
+    else:
+        return h
+
+df['Hits'] = df['Hits'].apply(hitchange)
+df['Hits'] = df['Hits'].astype('int64')
+
+# Drop unnecessary columns after transformations
+columns_to_drop = ['Release', 'y', 't']
+df.drop(columns_to_drop, axis=1, inplace=True)
+
+# Display final information about the cleaned dataset
+print(df.info())

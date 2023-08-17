@@ -32,11 +32,11 @@ The Python code used for data cleaning, transformation, and preprocessing can be
 Repository Structure
 This repository is organized as follows:
 
-notebooks/: Contains the Jupyter Notebook with the detailed data cleaning and preprocessing steps.
+readme/: Contains the detailed data cleaning and preprocessing steps.
 
-data/: Includes the raw dataset, fifa21_raw_data.csv, used for the project.
+data/: Includes the raw dataset link, fifa21_raw_data.csv, used for the project.
 
-images/: Houses any relevant images, such as visuals or graphs, used in the notebook or documentation.
+code/: Cantain relevant code for running this project.
 
 
 ## Conclusion

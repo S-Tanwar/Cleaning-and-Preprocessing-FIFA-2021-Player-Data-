@@ -1,7 +1,7 @@
 # Cleaning-and-Preprocessing-FIFA-2021-Player-Data
 
 ## Introduction
-Welcome to the GitHub and Kaggle repository for the Cleaning and Preprocessing FIFA 2021 Player Data project. As a data analyst, I embarked on a fascinating journey to transform a raw and messy dataset of FIFA 2021 player information into a clean and structured format, ready for analysis and visualization. This repository showcases the code, techniques, and steps I took to achieve this goal.
+Welcome to the GitHub repository for the Cleaning and Preprocessing FIFA 2021 Player Data project. As a data analyst, I embarked on a fascinating journey to transform a raw and messy dataset of FIFA 2021 player information into a clean and structured format, ready for analysis and visualization. This repository showcases the code, techniques, and steps I took to achieve this goal.
 
 ![f7503bfbd076bcb69f0957343c00be42da8f388d](https://github.com/S-Tanwar/Cleaning-and-Preprocessing-FIFA-2021-Player-Data-/assets/95356553/0a32b5b4-ea0c-4d65-883e-98f2f426d432)
 
